@@ -1,0 +1,156 @@
+#The following functions correspond to the Linked List problems from the data
+#structures subsection of HackerRank challenges. Solutions by Dan March.
+
+#The functions use the following Node object:
+
+ # class Node(object):
+ #
+ #   def __init__(self, data=None, next_node=None):
+ #       self.data = data
+ #       self.next = next_node
+
+def print_list(head):
+    """Prints the elements of a linked list in forward order.
+    @param head: The head node of the linked list."""
+    while head != None:
+        print(head.data)
+        head = head.next
+
+def Insert(head, data):
+    """Inserts a node at the end of a linked list.
+    @param head: The head node of the linked list.
+    @param data: The data containted by the inserted node."""
+    inserted_node = Node(data)
+    if head == None:
+        return inserted_node
+    pointer = head
+    while pointer.next != None:
+        pointer = pointer.next
+    pointer.next = inserted_node
+    return head
+
+def Insert(head, data):
+    """Inserts a node at the front of a linked list.
+    @param head: The head node of the linked list.
+    @param data: The data containted by the inserted node."""
+    return Node(data,head)
+
+def InsertNth(head, data, position):
+    if head == None:
+        return Node(data)
+    elif position == 0:
+        return Node(data,head)
+    else:
+        inserted_node = Node(data)
+        pointer = head
+        for _ in range(position-1):
+            pointer = pointer.next
+        saved_elm = pointer.next
+        pointer.next = inserted_node
+        inserted_node.next = saved_elm
+        return head
+
+def Delete(head, position):
+    """Deletes a node in a linked list at an input location.
+    @param head: The head node of the linked list.
+    @param position: The index of the node being deleted."""
+    if position == 0:
+        return head.next
+    pointer = head
+    for _ in range(position-1):
+        pointer = pointer.next
+    pointer.next = pointer.next.next
+    return head
+
+def Reverse(head):
+    """Reverses a linked list.
+    @param head: The head node of the linked list."""
+    pointer = head
+    prev, next_elm = None, None
+    while pointer.next != None:
+        next_elm = pointer.next
+        pointer.next = prev
+        prev = pointer
+        pointer = next_elm
+    pointer.next = prev
+    return pointer
+
+def ReversePrint(head):
+    """Prints the elements of a linked list in reverse order. NOTE: relies on
+    the Reverse(head) function implemented above.
+    @param head: The head node of the linked list."""
+    if head == None:
+        return head
+    head = Reverse(head)
+    while head != None:
+        print(head.data)
+        head = head.next
+
+def CompareLists(headA, headB):
+    """Determines whether or not two linked lists are identical.
+    @param headA: The head node of the first linked list.
+    @param headB: The head node of the second linked list.
+    @return: 0 for non-equality, 1 for equality."""
+    while headA != None and headB != None:
+        if headA.data != headB.data:
+            return 0
+        headA = headA.next
+        headB = headB.next
+    if headA == None and headB == None:
+        return 1
+    return 0
+
+def MergeLists(headA, headB):
+    """Merges two sorted linked lists.
+    @param headA: The head node of the first sorted linked list.
+    @param headB: The head node of the second sorted linked list."""
+    if headA == None:
+        return headB
+    elif headB == None:
+        return headA
+    else:
+        if headA.data <= headB.data:
+            pointer = headA
+        else:
+            temp = headA
+            headA = headB
+            headB = temp
+            pointer = headA
+        while headA.next != None:
+            if headB.data < headA.next.data:
+                temp = headA.next
+                headA.next = headB
+                headB = temp
+            headA = headA.next
+        if headB != None:
+            headA.next = headB
+        return pointer
+
+def GetNode(head, position):
+    """Gets the data from the node at the 'position'th index from the end of
+    the linked list.
+    @param head: The head node of the linked list.
+    @param position: The index of the desired node starting from the end."""
+    length = 0
+    pointer1, pointer2 = head, head
+    while pointer1 != None:
+        length += 1
+        pointer1 = pointer1.next
+    for _ in range(length-position-1):
+        pointer2 = pointer2.next
+    return pointer2.data
+
+def RemoveDuplicates(head):
+    """Removes repeated elements from a linked list so that each node in the
+    list appears only one time.
+    @param head: The head node of the linked list."""
+    seen_set = set()
+    pointer = head
+    seen_set.add(pointer.data)
+    while pointer.next != None:
+        if pointer.next.data not in seen_set:
+            seen_set.add(pointer.next.data)
+            pointer = pointer.next
+        else:
+            pointer.next = pointer.next.next
+    return head
