@@ -206,3 +206,40 @@ def FindMergeNode(headA, headB):
         pointerA = pointerA.next
         pointerB = pointerB.next
     return pointerA.data
+
+#The last function uses the doubly linked node object:
+
+ # class Node(object):
+ #
+ #   def __init__(self, data=None, next_node=None, prev_node = None):
+ #       self.data = data
+ #       self.next = next_node
+ #       self.prev = prev_node
+
+ def SortedInsert(head, data):
+     """Inserts an element with the provided data into a doubly linked list
+     in order to preserve sorted order.
+     @param head: The head node of the doubly linked list.
+     @param data: The data for the inserted node"""
+    if head.next == None and head.prev == None:
+        inserted_node = Node(data)
+        head.next = inserted_node
+        return head
+    elif data <= head.next.data:
+        temp = head.next
+        inserted_node = Node(data,temp)
+        inserted_node.next.prev = inserted_node
+        head.next = inserted_node
+        return head
+    else:
+        inserted_node = Node(data)
+        pointer = head
+        while pointer.next != None and pointer.next.data <= data:
+            pointer = pointer.next
+        temp = pointer.next
+        inserted_node.prev = pointer
+        inserted_node.next = temp
+        pointer.next = inserted_node
+        if temp != None:
+            pointer.next.next.prev = inserted_node
+        return head
