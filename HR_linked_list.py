@@ -154,3 +154,55 @@ def RemoveDuplicates(head):
         else:
             pointer.next = pointer.next.next
     return head
+
+def has_cycle(head):
+    """Determines whether or not a linked list has a cycle.
+    @param head: The head node for the linked list.
+    @return: 0 for non-cyclic, 1 for cyclic."""
+    pointer1, pointer2 = head, head
+    while pointer1.next != None and pointer2.next != None:
+        pointer1 = pointer1.next
+        pointer2 = pointer2.next.next
+        if pointer1 == pointer2:
+            return 1
+    return 0
+
+def FindMergeNode(headA, headB):
+    """Finds the node where two intersecting linked lists meet.
+    @param headA: The head node of the first linked list.
+    @param headB: The head node of the second linked list.
+    @return: The data at the intersection node."""
+    #Find which list is longer and make it a circlularly linked list
+    lengthA,lengthB = 1,1
+    pointerA, pointerB = headA, headA
+    while pointerA.next != None:
+        lengthA += 1
+        pointerA = pointerA.next
+    while pointerB.next != None:
+        lengthB += 1
+        pointerB = pointerB.next
+    if lengthB <= lengthA:
+        pointerA.next = headA
+        pointerA, pointerB = headB, headB
+    else:
+        pointerB.next = headB
+        pointerA, pointerB = headA, headA
+
+    #Run the cycle detection algorithm to find the insertection node
+    while pointerA.next != None and pointerB.next != None:
+        pointerA = pointerA.next
+        pointerB = pointerB.next.next
+        if pointerA == pointerB:
+            intersection_node = pointerA
+            break
+
+    #Increment a pointer starting at the beginning of the shorter list
+    #until it hits the pointer in the loop. This is the intersection point.
+    if lengthB <= lengthA:
+        pointerA = headB
+    else:
+        pointerA = headA
+    while pointerA != pointerB:
+        pointerA = pointerA.next
+        pointerB = pointerB.next
+    return pointerA.data
