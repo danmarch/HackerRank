@@ -207,6 +207,15 @@ def FindMergeNode(headA, headB):
         pointerB = pointerB.next
     return pointerA.data
 
+#The last two functions use the doubly linked node object:
+
+ # class Node(object):
+ #
+ #   def __init__(self, data=None, next_node=None, prev_node = None):
+ #       self.data = data
+ #       self.next = next_node
+ #       self.prev = prev_node
+
 def Reverse(head):
     """Reverses a doubly linked list.
     @param head: The head node of the doubly linked list."""
@@ -223,15 +232,6 @@ def Reverse(head):
     pointer.next = prev
     pointer.prev = head
     return pointer
-
-#The last function uses the doubly linked node object:
-
- # class Node(object):
- #
- #   def __init__(self, data=None, next_node=None, prev_node = None):
- #       self.data = data
- #       self.next = next_node
- #       self.prev = prev_node
 
  def SortedInsert(head, data):
      """Inserts an element with the provided data into a doubly linked list
