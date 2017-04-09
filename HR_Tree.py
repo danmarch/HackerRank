@@ -12,13 +12,13 @@ def preOrder(root):
     in a single line.
     @param root: The root node of the BST."""
     print_lst = []
-    def visit(node):
+    def _preOrder(node):
         if node == None:
             return
         print_lst.append(node.data)
-        visit(node.left)
-        visit(node.right)
-    visit(root)
+        _preOrder(node.left)
+        _preOrder(node.right)
+    _preOrder(root)
     print(*print_lst,sep=" ")
 
 def postOrder(root):
@@ -26,13 +26,13 @@ def postOrder(root):
     string in a single line.
     @param root: The root node of the BST."""
     print_lst = []
-    def visit(node):
+    def _postOrder(node):
         if node == None:
             return
-        visit(node.left)
-        visit(node.right)
+        _postOrder(node.left)
+        _postOrder(node.right)
         print_lst.append(node.data)
-    visit(root)
+    _postOrder(root)
     print(*print_lst,sep=" ")
 
 def inOrder(root):
@@ -40,13 +40,13 @@ def inOrder(root):
     in a single line.
     @param root: The root node of the BST."""
     print_lst = []
-    def visit(node):
+    def _inOrder(node):
         if node == None:
             return
-        visit(node.left)
+        _inOrder(node.left)
         print_lst.append(node.data)
-        visit(node.right)
-    visit(root)
+        _inOrder(node.right)
+    _inOrder(root)
     print(*print_lst,sep=" ")
 
 def height(root):
@@ -55,3 +55,22 @@ def height(root):
     if root == None or (root.left == None and root.right == None):
         return 0
     return 1 + max(height(root.left),height(root.right))
+
+def levelOrder(root):
+    """Prints out the level-order of the nodes of a binary search tree as a
+    string in a single line. Implements the ADT queue with a list.
+    @param root: The root node of the BST."""
+    if root == None:
+        return
+    print_lst = []
+    qu = []
+    qu.append(root)
+    while len(qu) > 0:
+        new_item = qu[0]
+        qu = qu[1:]
+        print_lst.append(new_item.data)
+        if new_item.left != None:
+            qu.append(new_item.left)
+        if new_item.right != None:
+            qu.append(new_item.right)
+    print(*print_lst,sep=" ")
