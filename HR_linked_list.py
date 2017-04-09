@@ -207,6 +207,23 @@ def FindMergeNode(headA, headB):
         pointerB = pointerB.next
     return pointerA.data
 
+def Reverse(head):
+    """Reverses a doubly linked list.
+    @param head: The head node of the doubly linked list."""
+    if head == None:
+        return head
+    pointer = head
+    next_elm, prev = None, None
+    while pointer.next != None:
+        next_elm = pointer.next
+        pointer.next = prev
+        pointer.prev = next_elm
+        prev = pointer
+        pointer = next_elm
+    pointer.next = prev
+    pointer.prev = head
+    return pointer
+
 #The last function uses the doubly linked node object:
 
  # class Node(object):
